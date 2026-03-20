@@ -1,189 +1,63 @@
 # France Apartment Rent Check
 
-Single-page Next.js app for checking whether an apartment rent in France looks low, fair, high, or very high against local public benchmark data.
+## One-line value proposition
 
-The current version runs entirely from local processed CSV files at runtime. It does not require PostgreSQL, Supabase, authentication, or external APIs.
+A data-driven web app that helps renters and home seekers in France quickly judge whether an apartment rent looks fair by comparing it with local public benchmark data.
 
-## What the app does
+## Problem statement
 
-- Search for a city or arrondissement in France
-- Choose a home type:
-  - `Studio / 1-2 rooms`
-  - `3+ rooms`
-- Enter surface area and monthly rent
-- Get an instant result based on 2025 public benchmark data:
-  - category verdict
-  - typical rent
-  - local benchmark range
-  - fair range
-  - estimate confidence
+Apartment rents are hard to evaluate in practice. Renters often see a listing price but have little context on whether it is in line with the local market, especially when comparing neighborhoods, arrondissements, or different apartment sizes. This creates uncertainty during home search, relocation, and rent negotiation.
+
+France Apartment Rent Check addresses that gap with a simple benchmark-based experience: users can enter a location, property type, apartment size, and monthly rent, then immediately see how that price compares with a local reference range.
+
+## Key features
+
+- **Instant rent benchmark check**
+  Users can quickly see whether a rent looks below benchmark, fair, above benchmark, or very high, without needing to interpret raw data tables.
+
+- **Local market context**
+  Results are tied to city- or arrondissement-level benchmark data, which makes the comparison more useful than a single national average.
+
+- **Size-adjusted comparison**
+  The app adjusts the benchmark for apartment size so users get a more realistic estimate than a flat price-per-square-meter comparison.
+
+- **Clear price guidance**
+  The result combines a typical rent, a fair range, and a broader local benchmark range to make the outcome easier to understand at a glance.
+
+- **Bilingual user experience**
+  The interface supports both English and French, making the product easier to use for local residents as well as international renters moving to France.
+
+## Demo / product description
+
+The app follows a single-step flow:
+
+1. Search for a city or arrondissement
+2. Select a home type
+3. Enter surface area and monthly rent
+4. Receive an immediate verdict with benchmark-based price guidance
+
+The current experience is optimized for a fast “Is this rent too high?” decision rather than a long analytical workflow.
+
+## Data sources
+
+This project uses public benchmark rent data published through **data.gouv.fr**, including the *Carte des loyers* datasets from the **Ministère de la Transition écologique**.
+
+- Data is public and location-based
+- The current version relies on benchmark reference data, not personal user data
+- User-submitted data is not yet part of the product
 
 ## Tech stack
 
 - Next.js
 - TypeScript
 - Tailwind CSS
-- Local CSV runtime data loaded server-side
+- Public benchmark data from data.gouv.fr
 
-## Runtime data source
+## Future improvements
 
-The app reads these files directly at runtime:
+- Expand data refresh workflows so benchmark updates can be published more easily over time
+- Add optional user-submitted rent observations to enrich local market visibility
+- Improve personalization with more housing attributes such as furnishing, condition, or amenities
+- Move to a database-backed architecture for scale, analytics, and richer product features
 
-- `data/processed/locations.csv`
-- `data/processed/rent_benchmarks.csv`
-
-These files are loaded from the filesystem in [`src/lib/data/csv-loader.ts`](src/lib/data/csv-loader.ts).
-
-Important:
-
-- If you deploy this app in its current form, these two processed CSV files must be committed to the repository.
-- The raw CSVs in `data/raw/` are useful for regeneration, but the deployed app itself only needs the processed CSVs.
-
-## Local development
-
-Requirements:
-
-- Node.js 20+ recommended
-- npm
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Start the app:
-
-```bash
-npm run dev
-```
-
-If the local Next.js dev cache gets into a bad state:
-
-```bash
-npm run dev:clean
-```
-
-Open:
-
-```text
-http://localhost:3000
-```
-
-Other useful commands:
-
-```bash
-npm run build
-npm run start
-npm run typecheck
-```
-
-## Project structure
-
-```text
-app/                     Next.js app router pages and API routes
-src/components/          UI components
-src/lib/data/            CSV loading layer
-src/lib/domain/          Rent calculation logic
-src/lib/repositories/    Data access boundary
-data/raw/                Original public CSV files
-data/processed/          Clean runtime CSV files
-scripts/                 Data cleaning and import scripts
-sql/                     PostgreSQL table setup
-docs/                    Project documentation
-```
-
-## Data pipeline
-
-To regenerate the processed CSV files from the raw public datasets, follow:
-
-- [`docs/data-pipeline.md`](docs/data-pipeline.md)
-
-## Upload to GitHub
-
-If this folder is not yet its own standalone Git repository, initialize it first from the project root:
-
-```bash
-git init
-git branch -M main
-git add .
-git commit -m "Initial commit"
-```
-
-Create a new empty repository on GitHub, then connect this folder to it:
-
-```bash
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-git push -u origin main
-```
-
-If this project is already connected to a GitHub remote, you can simply commit and push:
-
-```bash
-git add .
-git commit -m "Update app and docs"
-git push
-```
-
-Before pushing, make sure these files are included:
-
-- application code
-- `data/processed/locations.csv`
-- `data/processed/rent_benchmarks.csv`
-- documentation
-
-You may choose whether to keep `data/raw/` in the repository:
-
-- keep it if you want full reproducibility of the cleaning pipeline
-- omit it if you only want the deployed app and processed outputs
-
-## Deployment
-
-The simplest deployment path for the current app is Vercel because it supports Next.js directly and works well with the current file-based runtime setup.
-
-Step 1: push the repository to GitHub.
-
-Step 2: in Vercel, create a new project and import the GitHub repository.
-
-Step 3: let Vercel detect the framework as Next.js.
-
-Step 4: deploy with the default settings.
-
-For the current CSV-based version:
-
-- no database is required
-- no runtime secrets are required
-- no environment variables are required
-
-Important deployment note:
-
-- `data/processed/locations.csv`
-- `data/processed/rent_benchmarks.csv`
-
-must exist in the deployed repository, because the server reads them from disk at runtime.
-
-Detailed deployment steps:
-
-- [`docs/deployment.md`](docs/deployment.md)
-
-## Future data source swap
-
-The app is already structured so the UI does not depend directly on CSV parsing.
-
-Current flow:
-
-- CSV loader in `src/lib/data/`
-- repository boundary in `src/lib/repositories/`
-- calculation logic in `src/lib/domain/`
-
-To switch later to PostgreSQL or Supabase:
-
-1. keep the UI and API routes
-2. add a new repository implementation backed by the database
-3. switch the exported repository in [`src/lib/repositories/index.ts`](src/lib/repositories/index.ts)
-
-## Source
-
-Public benchmark source used in the app:
-
-- data.gouv.fr – "Carte des loyers" (Ministère de la Transition écologique)
+For setup, deployment, and data pipeline details, see [`docs/deployment.md`](docs/deployment.md) and [`docs/data-pipeline.md`](docs/data-pipeline.md).
