@@ -1,9 +1,12 @@
 {
   "name": "france-rent-benchmarking",
   "private": true,
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "dev": "next dev --webpack",
-    "dev:clean": "rm -rf .next .next-app && next dev --webpack",
+    "dev:clean": "rm -rf .next && next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
     "typecheck": "next typegen && tsc --noEmit"
