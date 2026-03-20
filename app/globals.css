@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+:root {
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-body: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  --background: #f2efe9;
+  --foreground: #102033;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top right, rgba(248, 215, 168, 0.8), transparent 30%),
+    radial-gradient(circle at left center, rgba(158, 200, 234, 0.32), transparent 28%),
+    linear-gradient(180deg, #f6f1e9 0%, #edf2f5 55%, #f8f6f0 100%);
+  color: var(--foreground);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+.font-serif {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: rgba(14, 34, 54, 0.18);
+}

@@ -1,0 +1,5 @@
+.next
+.next-app
+node_modules
+.vercel
+dist
