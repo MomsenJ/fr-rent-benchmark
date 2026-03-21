@@ -59,5 +59,3 @@ This project uses public benchmark rent data published through **data.gouv.fr**,
 - Add optional user-submitted rent observations to enrich local market visibility
 - Improve personalization with more housing attributes such as furnishing, condition, or amenities
 - Move to a database-backed architecture for scale, analytics, and richer product features
-
-For setup, deployment, and data pipeline details, see [`docs/deployment.md`](docs/deployment.md) and [`docs/data-pipeline.md`](docs/data-pipeline.md).
