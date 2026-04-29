@@ -533,6 +533,19 @@ function RangeChart({ result, language }: RangeChartProps) {
   );
 }
 
+function GitHubMark() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-5 w-5"
+      fill="currentColor"
+    >
+      <path d="M12 1.5a10.5 10.5 0 0 0-3.32 20.46c.53.1.72-.23.72-.51 0-.25-.01-1.08-.02-1.96-2.95.64-3.57-1.25-3.57-1.25-.48-1.23-1.18-1.55-1.18-1.55-.96-.66.07-.65.07-.65 1.06.08 1.62 1.09 1.62 1.09.94 1.61 2.46 1.14 3.06.87.09-.68.37-1.14.66-1.4-2.35-.27-4.82-1.17-4.82-5.22 0-1.15.41-2.1 1.08-2.84-.11-.27-.47-1.36.1-2.84 0 0 .89-.28 2.91 1.08a10.1 10.1 0 0 1 5.3 0c2.02-1.36 2.9-1.08 2.9-1.08.58 1.48.22 2.57.11 2.84.67.74 1.08 1.69 1.08 2.84 0 4.06-2.48 4.95-4.84 5.21.38.33.72.97.72 1.96 0 1.41-.01 2.55-.01 2.9 0 .28.19.62.72.51A10.5 10.5 0 0 0 12 1.5Z" />
+    </svg>
+  );
+}
+
 export function RentCheckClient({ summary }: RentCheckClientProps) {
   const [language, setLanguage] = useState<Language>("en");
   const [query, setQuery] = useState("");
@@ -1030,6 +1043,26 @@ export function RentCheckClient({ summary }: RentCheckClientProps) {
           </details>
         </div>
       </section>
+
+      <footer className="flex items-center justify-center px-2 py-4 text-[1.7rem] text-slate-500 sm:py-6">
+        <div className="flex items-center gap-2.5 rounded-full px-2 py-1">
+          <span className="text-[1.05rem] font-medium tracking-[-0.02em] text-slate-500 sm:text-[1.15rem]">
+            Built by Lyanna
+          </span>
+          <span aria-hidden="true" className="text-sm text-slate-300">
+            &middot;
+          </span>
+          <a
+            href="https://github.com/lyanna-zhang"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Lyanna Zhang on GitHub"
+            className="text-slate-700 transition hover:text-slate-950"
+          >
+            <GitHubMark />
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }

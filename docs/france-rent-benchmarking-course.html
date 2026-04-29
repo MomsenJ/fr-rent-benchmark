@@ -1,0 +1,2513 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Behind the Rent Verdict</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+     <link
+       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400;1,9..40,500&family=JetBrains+Mono:wght@400;500;600&display=swap"
+       rel="stylesheet"
+     />
+    <link
+      rel="icon"
+      href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="%23D94F30"/><path d="M18 44V20h16c7 0 12 4 12 10 0 5-3 8-7 9l8 5h-9l-7-5h-4v5H18zm9-12h6c3 0 5-1 5-4s-2-4-5-4h-6v8z" fill="%23fff"/></svg>'
+    />
+    <style>
+      :root {
+        --color-bg: #faf7f2;
+        --color-bg-warm: #f5f0e8;
+        --color-bg-code: #1e1e2e;
+        --color-text: #2c2a28;
+        --color-text-secondary: #6b6560;
+        --color-text-muted: #9e9790;
+        --color-border: #e5dfd6;
+        --color-border-light: #eeebe5;
+        --color-surface: #ffffff;
+        --color-surface-warm: #fdf9f3;
+        --color-accent: #d94f30;
+        --color-accent-hover: #c4432a;
+        --color-accent-light: #fdeee9;
+        --color-accent-muted: #e8836c;
+        --color-success: #2d8b55;
+        --color-success-light: #e8f5ee;
+        --color-error: #c93b3b;
+        --color-error-light: #fde8e8;
+        --color-info: #2a7b9b;
+        --color-info-light: #e4f2f7;
+        --color-actor-1: #d94f30;
+        --color-actor-2: #2a7b9b;
+        --color-actor-3: #7b6daa;
+        --color-actor-4: #d4a843;
+        --color-actor-5: #2d8b55;
+        --font-display: "Bricolage Grotesque", Georgia, serif;
+        --font-body: "DM Sans", -apple-system, sans-serif;
+        --font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+        --text-xs: 0.75rem;
+        --text-sm: 0.875rem;
+        --text-base: 1rem;
+        --text-lg: 1.125rem;
+        --text-xl: 1.25rem;
+        --text-2xl: 1.5rem;
+        --text-3xl: 1.875rem;
+        --text-4xl: 2.25rem;
+        --text-5xl: 3rem;
+        --text-6xl: 3.75rem;
+        --leading-tight: 1.15;
+        --leading-snug: 1.3;
+        --leading-normal: 1.6;
+        --space-1: 0.25rem;
+        --space-2: 0.5rem;
+        --space-3: 0.75rem;
+        --space-4: 1rem;
+        --space-5: 1.25rem;
+        --space-6: 1.5rem;
+        --space-8: 2rem;
+        --space-10: 2.5rem;
+        --space-12: 3rem;
+        --space-16: 4rem;
+        --space-20: 5rem;
+        --space-24: 6rem;
+        --content-width: 800px;
+        --content-width-wide: 1100px;
+        --nav-height: 56px;
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 16px;
+        --radius-full: 9999px;
+        --shadow-sm: 0 1px 2px rgba(44, 42, 40, 0.05);
+        --shadow-md: 0 4px 12px rgba(44, 42, 40, 0.08);
+        --shadow-lg: 0 8px 24px rgba(44, 42, 40, 0.1);
+        --shadow-xl: 0 16px 48px rgba(44, 42, 40, 0.12);
+        --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+        --duration-fast: 150ms;
+        --duration-normal: 300ms;
+        --duration-slow: 500ms;
+        --stagger-delay: 120ms;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        scroll-snap-type: y proximity;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at top right, rgba(217, 79, 48, 0.08), transparent 28%),
+          radial-gradient(circle at left center, rgba(42, 123, 155, 0.1), transparent 24%),
+          linear-gradient(180deg, #fbf8f4 0%, #f3eee7 100%);
+        color: var(--color-text);
+        font-family: var(--font-body);
+      }
+
+      ::selection {
+        background: rgba(217, 79, 48, 0.18);
+      }
+
+      .nav {
+        position: fixed;
+        inset: 0 0 auto 0;
+        height: var(--nav-height);
+        background: rgba(250, 247, 242, 0.86);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid rgba(229, 223, 214, 0.9);
+        z-index: 100;
+      }
+
+      .progress-track {
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 2px;
+        background: rgba(44, 42, 40, 0.06);
+      }
+
+      .progress-bar {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, var(--color-accent), var(--color-actor-2));
+        transition: width var(--duration-fast) linear;
+      }
+
+      .nav-inner {
+        max-width: 1180px;
+        height: 100%;
+        margin: 0 auto;
+        padding: 0 var(--space-5);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-4);
+      }
+
+      .nav-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        min-width: 0;
+      }
+
+      .nav-badge {
+        padding: 0.35rem 0.65rem;
+        border-radius: var(--radius-full);
+        background: var(--color-accent-light);
+        color: var(--color-accent);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      .nav-title {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .nav-dots {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .nav-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(44, 42, 40, 0.18);
+        cursor: pointer;
+        transition:
+          transform var(--duration-fast) var(--ease-out),
+          background var(--duration-fast) var(--ease-out);
+      }
+
+      .nav-dot:hover,
+      .nav-dot.active {
+        background: var(--color-accent);
+        transform: scale(1.15);
+      }
+
+      main {
+        overflow-x: clip;
+      }
+
+      .module {
+        min-height: 100vh;
+        min-height: 100dvh;
+        scroll-snap-align: start;
+        padding: calc(var(--nav-height) + var(--space-12)) var(--space-6) var(--space-16);
+        position: relative;
+      }
+
+      .module:nth-of-type(odd) {
+        background: rgba(245, 240, 232, 0.68);
+      }
+
+      .module:nth-of-type(even) {
+        background: rgba(250, 247, 242, 0.84);
+      }
+
+      .module-content {
+        max-width: var(--content-width-wide);
+        margin: 0 auto;
+      }
+
+      .module-hero {
+        display: grid;
+        gap: var(--space-10);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: 0.4rem 0.75rem;
+        border-radius: var(--radius-full);
+        border: 1px solid rgba(217, 79, 48, 0.2);
+        background: rgba(255, 255, 255, 0.65);
+        color: var(--color-accent);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .module-head {
+        display: grid;
+        gap: var(--space-4);
+        max-width: 900px;
+      }
+
+      .module-number {
+        font-family: var(--font-display);
+        font-size: clamp(3.5rem, 8vw, 5.5rem);
+        line-height: 0.9;
+        color: rgba(217, 79, 48, 0.18);
+        font-weight: 800;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin: 0;
+        font-family: var(--font-display);
+        line-height: var(--leading-tight);
+        letter-spacing: -0.03em;
+      }
+
+      .module-title {
+        font-size: clamp(2.3rem, 5vw, 4.25rem);
+        max-width: 10ch;
+      }
+
+      .module-subtitle {
+        font-size: var(--text-lg);
+        line-height: var(--leading-normal);
+        max-width: 62ch;
+        color: var(--color-text-secondary);
+      }
+
+      .screen-grid {
+        display: grid;
+        gap: var(--space-8);
+      }
+
+      .two-up {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-6);
+      }
+
+      .three-up {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-5);
+      }
+
+      .card,
+      .quiz-container,
+      .actor-panel,
+      .visual-file-tree,
+      .diagram-shell,
+      .stat-strip,
+      .translator-note,
+      .size-lab,
+      .pipeline-shell {
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid rgba(229, 223, 214, 0.95);
+        border-radius: 24px;
+        box-shadow: var(--shadow-md);
+      }
+
+      .card,
+      .diagram-shell,
+      .visual-file-tree,
+      .translator-note,
+      .size-lab,
+      .pipeline-shell,
+      .quiz-container {
+        padding: var(--space-6);
+      }
+
+      .card h3,
+      .diagram-shell h3,
+      .visual-file-tree h3,
+      .quiz-container h3,
+      .size-lab h3 {
+        font-size: var(--text-2xl);
+      }
+
+      p {
+        margin: 0;
+        font-size: var(--text-base);
+        line-height: var(--leading-normal);
+        color: var(--color-text-secondary);
+      }
+
+      .lead {
+        font-size: var(--text-lg);
+      }
+
+      .pill-row,
+      .stat-row,
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+      }
+
+      .pill,
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: 0.5rem 0.8rem;
+        border-radius: var(--radius-full);
+        background: rgba(255, 255, 255, 0.82);
+        border: 1px solid rgba(229, 223, 214, 0.95);
+        font-size: var(--text-sm);
+        color: var(--color-text);
+      }
+
+      .tag {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        letter-spacing: 0.04em;
+      }
+
+      .stat {
+        min-width: 170px;
+        padding: var(--space-5);
+        border-radius: 20px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 243, 237, 0.95));
+        border: 1px solid rgba(229, 223, 214, 0.95);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .stat-label {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .stat-value {
+        display: block;
+        margin-top: var(--space-3);
+        font-family: var(--font-display);
+        font-size: var(--text-3xl);
+        color: var(--color-text);
+      }
+
+      .journey-grid {
+        display: grid;
+        grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+        gap: var(--space-6);
+        align-items: start;
+      }
+
+      .journey-steps {
+        display: grid;
+        gap: var(--space-3);
+      }
+
+      .journey-step {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        width: 100%;
+        padding: var(--space-4);
+        border-radius: 18px;
+        border: 1px solid var(--color-border);
+        background: var(--color-surface);
+        cursor: pointer;
+        text-align: left;
+        transition:
+          transform var(--duration-fast) var(--ease-out),
+          border-color var(--duration-fast) var(--ease-out),
+          background var(--duration-fast) var(--ease-out);
+      }
+
+      .journey-step:hover,
+      .journey-step.active {
+        border-color: rgba(217, 79, 48, 0.4);
+        background: var(--color-accent-light);
+        transform: translateY(-2px);
+      }
+
+      .step-index {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(217, 79, 48, 0.14);
+        color: var(--color-accent);
+        font-family: var(--font-display);
+        font-weight: 700;
+      }
+
+      .journey-detail {
+        min-height: 320px;
+        padding: var(--space-6);
+        border-radius: 24px;
+        background: linear-gradient(180deg, rgba(30, 30, 46, 0.98), rgba(36, 36, 60, 0.98));
+        color: #eef2ff;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .journey-detail-label {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(255, 255, 255, 0.55);
+      }
+
+      .journey-detail h3 {
+        margin-top: var(--space-3);
+        font-size: var(--text-3xl);
+      }
+
+      .journey-detail p {
+        margin-top: var(--space-4);
+        color: rgba(238, 242, 255, 0.82);
+      }
+
+      .journey-bullets {
+        margin-top: var(--space-5);
+        display: grid;
+        gap: var(--space-3);
+      }
+
+      .journey-bullets div {
+        padding: var(--space-4);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .journey-bullets strong {
+        display: block;
+        margin-bottom: var(--space-2);
+      }
+
+      .translation-block {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: var(--shadow-lg);
+      }
+
+      .translation-code {
+        position: relative;
+        padding: var(--space-6);
+        background: var(--color-bg-code);
+        color: #cdd6f4;
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        line-height: 1.7;
+        overflow-x: hidden;
+      }
+
+      .translation-code pre,
+      .translation-code code {
+        margin: 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+        overflow-x: hidden;
+      }
+
+      .translation-english {
+        position: relative;
+        padding: var(--space-6);
+        background: var(--color-surface-warm);
+        font-size: var(--text-sm);
+        line-height: 1.7;
+        border-left: 3px solid var(--color-accent);
+      }
+
+      .translation-label {
+        position: absolute;
+        top: var(--space-2);
+        right: var(--space-3);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        opacity: 0.55;
+      }
+
+      .translation-lines {
+        display: grid;
+        gap: var(--space-3);
+      }
+
+      .translation-lines .tl {
+        padding-left: var(--space-4);
+        border-left: 2px solid rgba(217, 79, 48, 0.18);
+      }
+
+      .aha-box {
+        padding: var(--space-5);
+        border-radius: 20px;
+        background: linear-gradient(180deg, rgba(253, 238, 233, 0.94), rgba(255, 248, 244, 0.92));
+        border: 1px solid rgba(217, 79, 48, 0.18);
+      }
+
+      .aha-box strong {
+        display: inline-block;
+        margin-bottom: var(--space-2);
+        color: var(--color-accent);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .term {
+        border-bottom: 1px dashed rgba(217, 79, 48, 0.55);
+        cursor: pointer;
+      }
+
+      .tooltip-popup {
+        position: fixed;
+        max-width: 280px;
+        padding: var(--space-3) var(--space-4);
+        border-radius: 14px;
+        background: rgba(30, 30, 46, 0.96);
+        color: #f5f5ff;
+        box-shadow: var(--shadow-xl);
+        font-size: var(--text-sm);
+        line-height: 1.5;
+        pointer-events: none;
+        z-index: 200;
+        opacity: 0;
+        transform: translateY(6px);
+        transition:
+          opacity var(--duration-fast) var(--ease-out),
+          transform var(--duration-fast) var(--ease-out);
+      }
+
+      .tooltip-popup.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .actor-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+        gap: var(--space-6);
+      }
+
+      .actor-buttons {
+        display: grid;
+        gap: var(--space-3);
+      }
+
+      .actor-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        width: 100%;
+        padding: var(--space-4);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid var(--color-border);
+        cursor: pointer;
+        text-align: left;
+        transition:
+          border-color var(--duration-fast) var(--ease-out),
+          transform var(--duration-fast) var(--ease-out);
+      }
+
+      .actor-btn.active {
+        border-color: rgba(42, 123, 155, 0.45);
+        transform: translateX(4px);
+      }
+
+      .actor-dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        flex: 0 0 auto;
+      }
+
+      .actor-panel {
+        padding: var(--space-6);
+      }
+
+      .actor-panel h3 {
+        font-size: var(--text-3xl);
+      }
+
+      .actor-panel .panel-tag {
+        margin-top: var(--space-4);
+        display: inline-flex;
+        padding: 0.35rem 0.65rem;
+        border-radius: var(--radius-full);
+        background: rgba(42, 123, 155, 0.12);
+        color: var(--color-info);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .actor-panel ul,
+      .pipeline-list,
+      .debug-list {
+        margin: var(--space-5) 0 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: var(--space-3);
+      }
+
+      .actor-panel li,
+      .pipeline-list li,
+      .debug-list li {
+        padding: var(--space-4);
+        border-radius: 16px;
+        background: rgba(250, 247, 242, 0.92);
+        border: 1px solid rgba(229, 223, 214, 0.95);
+      }
+
+      .flow-lane {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: var(--space-3);
+        align-items: center;
+      }
+
+      .flow-node {
+        position: relative;
+        min-height: 150px;
+        padding: var(--space-5);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid var(--color-border);
+      }
+
+      .flow-node::after {
+        content: "→";
+        position: absolute;
+        top: 50%;
+        right: -0.95rem;
+        transform: translateY(-50%);
+        color: rgba(44, 42, 40, 0.25);
+        font-size: 1.5rem;
+      }
+
+      .flow-node:last-child::after {
+        display: none;
+      }
+
+      .flow-node strong {
+        display: block;
+        font-size: var(--text-lg);
+        color: var(--color-text);
+      }
+
+      .flow-node small {
+        display: block;
+        margin-top: var(--space-2);
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--color-text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      .flow-node p {
+        margin-top: var(--space-3);
+      }
+
+      .diagram-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+        margin-bottom: var(--space-5);
+      }
+
+      .layer-btn,
+      .segment-btn,
+      .mini-btn,
+      .quiz-check-btn,
+      .quiz-reset-btn {
+        border: none;
+        cursor: pointer;
+        transition:
+          transform var(--duration-fast) var(--ease-out),
+          background var(--duration-fast) var(--ease-out),
+          color var(--duration-fast) var(--ease-out);
+      }
+
+      .layer-btn,
+      .segment-btn,
+      .mini-btn {
+        padding: 0.8rem 1rem;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1px solid var(--color-border);
+        color: var(--color-text);
+      }
+
+      .layer-btn.active,
+      .segment-btn.active {
+        background: var(--color-accent);
+        color: #fff;
+        transform: translateY(-1px);
+      }
+
+      .architecture-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: var(--space-6);
+      }
+
+      .architecture-stack {
+        display: grid;
+        gap: var(--space-4);
+      }
+
+      .arch-layer {
+        padding: var(--space-5);
+        border-radius: 20px;
+        border: 1px solid var(--color-border);
+        background: rgba(255, 255, 255, 0.85);
+        opacity: 0.45;
+        transform: scale(0.985);
+        transition:
+          opacity var(--duration-normal) var(--ease-out),
+          transform var(--duration-normal) var(--ease-out),
+          border-color var(--duration-normal) var(--ease-out);
+      }
+
+      .arch-layer.active {
+        opacity: 1;
+        transform: scale(1);
+        border-color: rgba(217, 79, 48, 0.28);
+      }
+
+      .arch-layer h4 {
+        font-size: var(--text-xl);
+      }
+
+      .arch-layer p {
+        margin-top: var(--space-2);
+      }
+
+      .arch-readout {
+        padding: var(--space-6);
+        border-radius: 20px;
+        background: linear-gradient(180deg, rgba(30, 30, 46, 0.96), rgba(46, 41, 53, 0.96));
+        color: #f4f1ff;
+      }
+
+      .arch-readout h4 {
+        font-size: var(--text-2xl);
+      }
+
+      .arch-readout p,
+      .arch-readout li {
+        color: rgba(244, 241, 255, 0.82);
+      }
+
+      .arch-readout ul {
+        margin: var(--space-4) 0 0;
+        padding-left: 1rem;
+      }
+
+      .visual-file-tree ul {
+        list-style: none;
+        padding: 0;
+        margin: var(--space-5) 0 0;
+        display: grid;
+        gap: var(--space-2);
+      }
+
+      .visual-file-tree li {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-3);
+        padding: var(--space-3);
+        border-radius: 14px;
+        background: rgba(250, 247, 242, 0.9);
+      }
+
+      .tree-icon {
+        width: 1.8rem;
+        height: 1.8rem;
+        border-radius: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95rem;
+        background: rgba(217, 79, 48, 0.12);
+      }
+
+      .size-lab {
+        display: grid;
+        gap: var(--space-5);
+      }
+
+      .lab-grid {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: var(--space-6);
+        align-items: center;
+      }
+
+      .range-wrap {
+        display: grid;
+        gap: var(--space-4);
+      }
+
+      input[type="range"] {
+        width: 100%;
+        accent-color: var(--color-accent);
+      }
+
+      .meter {
+        position: relative;
+        height: 18px;
+        border-radius: 999px;
+        background: linear-gradient(
+          90deg,
+          rgba(42, 123, 155, 0.18) 0%,
+          rgba(42, 123, 155, 0.18) 20%,
+          rgba(45, 139, 85, 0.18) 20%,
+          rgba(45, 139, 85, 0.18) 60%,
+          rgba(212, 168, 67, 0.18) 60%,
+          rgba(212, 168, 67, 0.18) 80%,
+          rgba(217, 79, 48, 0.18) 80%,
+          rgba(217, 79, 48, 0.18) 100%
+        );
+        overflow: hidden;
+      }
+
+      .meter-pin {
+        position: absolute;
+        top: 50%;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--color-accent);
+        border: 3px solid #fff;
+        box-shadow: var(--shadow-md);
+        transform: translate(-50%, -50%);
+      }
+
+      .lab-readout {
+        min-width: 250px;
+        padding: var(--space-5);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid var(--color-border);
+      }
+
+      .lab-readout strong {
+        display: block;
+        font-family: var(--font-display);
+        font-size: var(--text-2xl);
+        color: var(--color-text);
+      }
+
+      .lab-readout span {
+        display: block;
+        margin-top: var(--space-2);
+        color: var(--color-text-secondary);
+      }
+
+      .pipeline-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--space-4);
+      }
+
+      .pipeline-card {
+        position: relative;
+        min-height: 180px;
+        padding: var(--space-5);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.84);
+        border: 1px solid var(--color-border);
+      }
+
+      .pipeline-card::after {
+        content: "→";
+        position: absolute;
+        top: 50%;
+        right: -0.95rem;
+        transform: translateY(-50%);
+        font-size: 1.6rem;
+        color: rgba(44, 42, 40, 0.2);
+      }
+
+      .pipeline-card:last-child::after {
+        display: none;
+      }
+
+      .quiz-container {
+        display: grid;
+        gap: var(--space-5);
+      }
+
+      .quiz-question-block {
+        display: grid;
+        gap: var(--space-3);
+        padding: var(--space-4);
+        border-radius: 18px;
+        background: rgba(250, 247, 242, 0.92);
+        border: 1px solid rgba(229, 223, 214, 0.95);
+      }
+
+      .quiz-question {
+        font-size: var(--text-lg);
+        font-family: var(--font-body);
+        font-weight: 600;
+      }
+
+      .quiz-options {
+        display: grid;
+        gap: var(--space-3);
+      }
+
+      .quiz-option {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        width: 100%;
+        padding: var(--space-3) var(--space-4);
+        border: 2px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: var(--color-surface);
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .quiz-option:hover {
+        border-color: var(--color-accent-muted);
+      }
+
+      .quiz-option.selected {
+        border-color: var(--color-accent);
+        background: var(--color-accent-light);
+      }
+
+      .quiz-option.correct {
+        border-color: var(--color-success);
+        background: var(--color-success-light);
+      }
+
+      .quiz-option.incorrect {
+        border-color: var(--color-error);
+        background: var(--color-error-light);
+      }
+
+      .quiz-option-radio {
+        width: 18px;
+        height: 18px;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        border: 2px solid var(--color-border);
+      }
+
+      .quiz-option.selected .quiz-option-radio {
+        border-color: var(--color-accent);
+        background: var(--color-accent);
+        box-shadow: inset 0 0 0 3px white;
+      }
+
+      .quiz-option.correct .quiz-option-radio {
+        border-color: var(--color-success);
+        background: var(--color-success);
+        box-shadow: inset 0 0 0 3px white;
+      }
+
+      .quiz-option.incorrect .quiz-option-radio {
+        border-color: var(--color-error);
+        background: var(--color-error);
+        box-shadow: inset 0 0 0 3px white;
+      }
+
+      .quiz-feedback {
+        display: none;
+        padding: var(--space-3);
+        border-radius: 14px;
+        font-size: var(--text-sm);
+        line-height: 1.6;
+      }
+
+      .quiz-feedback.show {
+        display: block;
+      }
+
+      .quiz-feedback.success {
+        background: var(--color-success-light);
+        color: var(--color-success);
+      }
+
+      .quiz-feedback.error {
+        background: var(--color-error-light);
+        color: var(--color-error);
+      }
+
+      .quiz-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+      }
+
+      .quiz-check-btn,
+      .quiz-reset-btn {
+        padding: 0.9rem 1.1rem;
+        border-radius: 14px;
+        font-weight: 600;
+      }
+
+      .quiz-check-btn {
+        background: var(--color-accent);
+        color: #fff;
+      }
+
+      .quiz-check-btn:hover,
+      .quiz-reset-btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .quiz-reset-btn {
+        background: #fff;
+        color: var(--color-text);
+        border: 1px solid var(--color-border);
+      }
+
+      .quiz-overall-feedback {
+        padding: var(--space-4);
+        border-radius: 16px;
+        background: rgba(42, 123, 155, 0.12);
+        color: var(--color-info);
+        display: none;
+      }
+
+      .quiz-overall-feedback.show {
+        display: block;
+      }
+
+      .animate-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity var(--duration-slow) var(--ease-out),
+          transform var(--duration-slow) var(--ease-out);
+      }
+
+      .animate-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .stagger-children > .animate-in {
+        transition-delay: calc(var(--stagger-index, 0) * var(--stagger-delay));
+      }
+
+      @media (max-width: 980px) {
+        .journey-grid,
+        .actor-grid,
+        .architecture-grid,
+        .two-up,
+        .lab-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .three-up,
+        .flow-lane,
+        .pipeline-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .flow-node::after,
+        .pipeline-card::after {
+          display: none;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-inner {
+          padding: 0 var(--space-4);
+        }
+
+        .module {
+          padding-inline: var(--space-4);
+        }
+
+        .translation-block {
+          grid-template-columns: 1fr;
+        }
+
+        .translation-english {
+          border-left: none;
+          border-top: 3px solid var(--color-accent);
+        }
+
+        .stat {
+          min-width: 0;
+        }
+
+        .nav-title {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav" aria-label="Course navigation">
+      <div class="nav-inner">
+        <div class="nav-title-wrap">
+          <span class="nav-badge">Interactive Course</span>
+          <span class="nav-title">Behind the Rent Verdict</span>
+        </div>
+        <div class="nav-dots" role="tablist" aria-label="Module navigation">
+          <button class="nav-dot" data-target="module-1" aria-label="Module 1"></button>
+          <button class="nav-dot" data-target="module-2" aria-label="Module 2"></button>
+          <button class="nav-dot" data-target="module-3" aria-label="Module 3"></button>
+          <button class="nav-dot" data-target="module-4" aria-label="Module 4"></button>
+          <button class="nav-dot" data-target="module-5" aria-label="Module 5"></button>
+          <button class="nav-dot" data-target="module-6" aria-label="Module 6"></button>
+        </div>
+      </div>
+      <div class="progress-track" aria-hidden="true"><div class="progress-bar"></div></div>
+    </nav>
+
+    <main>
+      <section class="module" id="module-1" data-title="One Click Story">
+        <div class="module-content module-hero">
+          <div class="module-head animate-in">
+            <span class="eyebrow">Module 1 · What the app does</span>
+            <span class="module-number">01</span>
+            <h1 class="module-title">One rent question. Six moving parts.</h1>
+            <p class="module-subtitle">
+              This app answers a very human question: “Is this apartment rent wildly off?” Under the hood, it turns a
+              simple form into a guided trip through a <span class="term" data-tooltip="A component is a reusable chunk of interface or logic. When talking to AI, you can say 'put this in its own component' when one part of the UI deserves its own job.">component</span>,
+              two tiny <span class="term" data-tooltip="An API is a door one piece of software opens so another piece can ask for something in a predictable way. When prompting AI, you can say 'create an API route that returns JSON'.">API</span>
+              routes, a calculation engine, and 104,700 benchmark rows.
+            </p>
+            <div class="stat-row">
+              <div class="stat">
+                <span class="stat-label">Locations loaded</span>
+                <span class="stat-value">34,900</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Benchmarks loaded</span>
+                <span class="stat-value">104,700</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Core user action</span>
+                <span class="stat-value">Check one rent</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card animate-in">
+            <h3>The product in plain English</h3>
+            <p class="lead">
+              Think of it like a local price reality-check for apartments in France. You type a city, choose a home
+              size bucket, enter square meters and monthly rent, and the app tells you whether the price looks below
+              benchmark, fair, above benchmark, or very high.
+            </p>
+            <div class="pill-row" style="margin-top: 1.5rem">
+              <span class="pill">Bilingual UI</span>
+              <span class="pill">Public 2025 benchmark data</span>
+              <span class="pill">No user accounts</span>
+              <span class="pill">Single-step decision flow</span>
+            </div>
+          </div>
+
+          <div class="diagram-shell animate-in">
+            <h3>Tap through the backstage trip</h3>
+            <p>
+              A good metaphor here is a courier route. Your form is the package, and each stop adds just enough
+              information before passing it on.
+            </p>
+            <div class="journey-grid" style="margin-top: 1.5rem">
+              <div class="journey-steps" role="tablist" aria-label="Journey steps">
+                <button class="journey-step active" data-journey="j1" role="tab" aria-selected="true">
+                  <span class="step-index">1</span>
+                  <span>
+                    <strong>Home page opens</strong><br />
+                    Summary counts are fetched on the server.
+                  </span>
+                </button>
+                <button class="journey-step" data-journey="j2" role="tab" aria-selected="false">
+                  <span class="step-index">2</span>
+                  <span>
+                    <strong>User types a city</strong><br />
+                    Frontend asks the search API for matching places.
+                  </span>
+                </button>
+                <button class="journey-step" data-journey="j3" role="tab" aria-selected="false">
+                  <span class="step-index">3</span>
+                  <span>
+                    <strong>User submits the form</strong><br />
+                    A POST request carries location, size, and rent.
+                  </span>
+                </button>
+                <button class="journey-step" data-journey="j4" role="tab" aria-selected="false">
+                  <span class="step-index">4</span>
+                  <span>
+                    <strong>Repository finds the record</strong><br />
+                    Local CSV-backed indexes return the benchmark row.
+                  </span>
+                </button>
+                <button class="journey-step" data-journey="j5" role="tab" aria-selected="false">
+                  <span class="step-index">5</span>
+                  <span>
+                    <strong>The calculator judges the price</strong><br />
+                    Size adjustment and verdict rules turn data into meaning.
+                  </span>
+                </button>
+              </div>
+              <div class="journey-detail" data-journey-panel>
+                <div class="journey-detail-label">Current stop</div>
+                <h3 id="journey-title">Home page opens</h3>
+                <p id="journey-copy">
+                  The server renders the page and asks the repository for summary counts before the browser even sees
+                  the interface. That means the “locations covered” and “benchmark entries” cards arrive pre-filled.
+                </p>
+                <div class="journey-bullets" id="journey-bullets">
+                  <div>
+                    <strong>Why you care</strong>
+                    This is the first clue that the app is split between server work and browser work.
+                  </div>
+                  <div>
+                    <strong>Debug smell</strong>
+                    If those big headline numbers disappear, your first suspect is the repository or data loader, not
+                    the search box.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">Code · app/page.tsx</span>
+              <pre><code>export default async function HomePage() {
+  const summary = await rentDataRepository.getDatasetSummary();
+
+  return &lt;RentCheckClient summary={summary} /&gt;;
+}</code></pre>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <p class="tl">When the home page is requested, stop and fetch the summary before rendering.</p>
+                <p class="tl">That summary comes from the repository, which is the app's “librarian” for data.</p>
+                <p class="tl">Then hand the summary into the client-side interface so the page opens with context.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="aha-box animate-in">
+            <strong>Aha!</strong>
+            <p>
+              A thin page file is often a good sign. It means the page is acting like a stage manager, not trying to do
+              every job itself.
+            </p>
+          </div>
+
+          <div class="quiz-container animate-in" data-quiz="quiz-1">
+            <h3>Scenario quiz: trace the first break</h3>
+            <div class="quiz-question-block" data-correct="b">
+              <div class="quiz-question">
+                The headline cards show zero locations before the user clicks anything. Where would you investigate
+                first?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>The CSS gradients</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>The repository path that provides `getDatasetSummary()`</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>The language toggle buttons</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Exactly. Those cards are rendered from server-fetched summary data before the search UI matters." data-error-text="Not quite. The numbers appear before any form interaction, so the likely issue is the summary fetch path, not the decorative UI."></div>
+            </div>
+            <div class="quiz-question-block" data-correct="c">
+              <div class="quiz-question">
+                If you wanted the home page to also show the “last data refresh date,” what kind of change is this?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>Only a CSS tweak</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>Only a browser-side change</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>A server summary change plus UI display work</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Yes. The value needs to be fetched on the server and then displayed in the client UI." data-error-text="Close, but the page gets this data from the server first, so the summary source must grow before the UI can show it."></div>
+            </div>
+            <div class="quiz-question-block" data-correct="a">
+              <div class="quiz-question">
+                Which sentence best describes this app's starting architecture?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>A single-page UI backed by tiny server routes and local files</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>A many-service distributed backend</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>A pure static site with no runtime logic</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Right. The app stays lightweight by keeping data local and the server layer thin." data-error-text="Not this one. The codebase is much simpler: one UI, two route handlers, and local CSV data."></div>
+            </div>
+            <div class="quiz-actions">
+              <button class="quiz-check-btn" type="button" data-action="check-quiz">Check answers</button>
+              <button class="quiz-reset-btn" type="button" data-action="reset-quiz">Try again</button>
+            </div>
+            <div class="quiz-overall-feedback"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="module-2" data-title="Frontend Orchestrator">
+        <div class="module-content screen-grid">
+          <div class="module-head animate-in">
+            <span class="eyebrow">Module 2 · Meet the cast</span>
+            <span class="module-number">02</span>
+            <h2 class="module-title">The frontend is the conductor, not the calculator.</h2>
+            <p class="module-subtitle">
+              The biggest file in this repo is <code>RentCheckClient</code>. That is not because it contains all the
+              business truth. It is because it choreographs the user experience: language, autocomplete, validation,
+              form submission, and result display.
+            </p>
+          </div>
+
+          <div class="actor-grid animate-in">
+            <div class="actor-buttons" role="tablist" aria-label="Actors in the app">
+              <button class="actor-btn active" data-actor="client">
+                <span style="display:flex;align-items:center;gap:0.75rem">
+                  <span class="actor-dot" style="background: var(--color-actor-1)"></span>
+                  <span><strong>RentCheckClient</strong><br />Runs the interaction loop.</span>
+                </span>
+                <span class="tag">browser</span>
+              </button>
+              <button class="actor-btn" data-actor="locations">
+                <span style="display:flex;align-items:center;gap:0.75rem">
+                  <span class="actor-dot" style="background: var(--color-actor-2)"></span>
+                  <span><strong>/api/locations</strong><br />Returns autocomplete suggestions.</span>
+                </span>
+                <span class="tag">search</span>
+              </button>
+              <button class="actor-btn" data-actor="rentcheck">
+                <span style="display:flex;align-items:center;gap:0.75rem">
+                  <span class="actor-dot" style="background: var(--color-actor-3)"></span>
+                  <span><strong>/api/rent-check</strong><br />Validates and computes a verdict.</span>
+                </span>
+                <span class="tag">submit</span>
+              </button>
+              <button class="actor-btn" data-actor="repository">
+                <span style="display:flex;align-items:center;gap:0.75rem">
+                  <span class="actor-dot" style="background: var(--color-actor-4)"></span>
+                  <span><strong>Repository</strong><br />Finds locations and benchmark rows.</span>
+                </span>
+                <span class="tag">data</span>
+              </button>
+              <button class="actor-btn" data-actor="domain">
+                <span style="display:flex;align-items:center;gap:0.75rem">
+                  <span class="actor-dot" style="background: var(--color-actor-5)"></span>
+                  <span><strong>Domain calculator</strong><br />Turns numbers into a verdict.</span>
+                </span>
+                <span class="tag">logic</span>
+              </button>
+            </div>
+            <div class="actor-panel">
+              <h3 id="actor-title">RentCheckClient</h3>
+              <span class="panel-tag" id="actor-tag">Browser orchestrator</span>
+              <p id="actor-copy" style="margin-top: 1rem">
+                This is the air traffic controller. It does not own the rent math, but it decides when searches happen,
+                when errors appear, and when the result card scrolls into view.
+              </p>
+              <ul id="actor-points">
+                <li>Keeps UI state like query text, selected city, surface area, monthly rent, and loading flags.</li>
+                <li>Makes two network requests: one for suggestions and one for the final verdict.</li>
+                <li>Protects the user from bad input before the server is even contacted.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">Code · rent-check-client.tsx</span>
+              <pre><code>  useEffect(() => {
+    if (selectedLocation && query === selectedLocation.displayName) {
+      setSuggestions([]);
+      return;
+    }
+
+    if (query.trim().length &lt; 2) {
+      setSuggestions([]);
+      return;
+    }</code></pre>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <p class="tl">If the user already chose a suggestion and has not changed it, stop searching again.</p>
+                <p class="tl">If the user has typed fewer than two characters, also stop.</p>
+                <p class="tl">This is a tiny example of protecting the server from pointless work.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="two-up">
+            <div class="card animate-in">
+              <h3>Why this file matters for AI steering</h3>
+              <p>
+                If you ask an AI tool to “add a new field,” this is the file that probably grows first. Knowing that
+                helps you give better instructions, like “add a furnished/unfurnished toggle to the client form, then
+                include it in the POST payload.”
+              </p>
+            </div>
+            <div class="aha-box animate-in">
+              <strong>Aha!</strong>
+              <p>
+                A large UI file is not automatically a bad smell. The real question is whether it owns too many kinds of
+                responsibility. Here, the app keeps math in the domain layer, which is a healthy split.
+              </p>
+            </div>
+          </div>
+
+          <div class="quiz-container animate-in" data-quiz="quiz-2">
+            <h3>Scenario quiz: where should the next change live?</h3>
+            <div class="quiz-question-block" data-correct="c">
+              <div class="quiz-question">
+                You want a new “charges included?” checkbox that changes the submitted payload. Where do you start?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>The SQL schema only</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>The CSV cleaning script only</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>The client form state and submit function first</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Exactly. New form inputs begin life in the client orchestrator, because that's where state and submission wiring live." data-error-text="Not yet. This feature starts as user input, so the first stop is the client form and its submit payload."></div>
+            </div>
+            <div class="quiz-question-block" data-correct="a">
+              <div class="quiz-question">
+                Which symptom most strongly hints that the autocomplete logic is the problem?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>Typing “Par” never shows suggestions even though the page loads fine</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>The final verdict labels are in the wrong color</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>The deployment guide mentions PostgreSQL</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Yes. That points to the query state, debounce, fetch, or search API path." data-error-text="Try narrowing it to the symptom that happens while typing, before the final submit even occurs."></div>
+            </div>
+            <div class="quiz-question-block" data-correct="b">
+              <div class="quiz-question">
+                Why does the app keep both `query` and `selectedLocation` in state?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>Because React requires two strings for every input</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>Because visible text and confirmed structured choice are not the same thing</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>Because the API only accepts arrays</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Exactly. The text box can say anything, but the app only trusts a real picked location object." data-error-text="The important distinction is between free typing and a confirmed selected location."></div>
+            </div>
+            <div class="quiz-actions">
+              <button class="quiz-check-btn" type="button" data-action="check-quiz">Check answers</button>
+              <button class="quiz-reset-btn" type="button" data-action="reset-quiz">Try again</button>
+            </div>
+            <div class="quiz-overall-feedback"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="module-3" data-title="Requests and Validation">
+        <div class="module-content screen-grid">
+          <div class="module-head animate-in">
+            <span class="eyebrow">Module 3 · How pieces talk</span>
+            <span class="module-number">03</span>
+            <h2 class="module-title">Two route handlers keep the network story tiny.</h2>
+            <p class="module-subtitle">
+              The outside-world metaphor here is a ticket counter. The browser fills out a slip, the counter checks it,
+              then either rejects bad input fast or forwards the request to the real logic.
+            </p>
+          </div>
+
+          <div class="diagram-shell animate-in">
+            <h3>Message flow in one glance</h3>
+            <div class="flow-lane" style="margin-top: 1.5rem">
+              <div class="flow-node">
+                <small>1 · Browser</small>
+                <strong>User types</strong>
+                <p>The client sends a GET request to `/api/locations` after a short pause.</p>
+              </div>
+              <div class="flow-node">
+                <small>2 · Search route</small>
+                <strong>Find matches</strong>
+                <p>The route delegates to the repository and returns JSON suggestions.</p>
+              </div>
+              <div class="flow-node">
+                <small>3 · Browser</small>
+                <strong>User submits</strong>
+                <p>The client sends a POST request with location key, size bucket, surface area, and monthly rent.</p>
+              </div>
+              <div class="flow-node">
+                <small>4 · Rent-check route</small>
+                <strong>Validate first</strong>
+                <p>Bad selections or impossible numbers are rejected before any heavy work happens.</p>
+              </div>
+              <div class="flow-node">
+                <small>5 · Domain layer</small>
+                <strong>Compute result</strong>
+                <p>If the data exists, the route builds a verdict and responds with a ready-to-render result object.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">Code · app/api/rent-check/route.ts</span>
+              <pre><code>  if (!locationKey || !segment || !isFormSegment(segment)) {
+    return Response.json({ errorCode: "invalid_selection" }, { status: 400 });
+  }
+
+  if (!Number.isFinite(surfaceArea) || surfaceArea &lt;= 0) {
+    return Response.json({ errorCode: "invalid_surface_area" }, { status: 400 });
+  }</code></pre>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <p class="tl">If the selected city or home-type bucket is missing or fake, stop immediately.</p>
+                <p class="tl">If the surface area is not a real positive number, stop immediately again.</p>
+                <p class="tl">This keeps nonsense from reaching the real calculator and makes error messages specific.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="two-up">
+            <div class="card animate-in">
+              <h3>Why thin APIs are powerful</h3>
+              <p>
+                A thin API layer is easier to reason about. It mostly says: “Is this input believable? If yes, ask the
+                right helper. If no, explain why.” That gives you a clean place to add permissions, rate limits, or
+                analytics later.
+              </p>
+            </div>
+            <div class="card animate-in">
+              <h3>Best debugging instinct here</h3>
+              <p>
+                Separate <span class="term" data-tooltip="Validation means checking that input looks allowed and sensible before deeper work happens. When prompting AI, you can ask for 'server-side validation' when you do not want the browser to be the only gatekeeper.">validation</span>
+                bugs from calculation bugs. A 400 response means the request shape is wrong. A strange but valid verdict
+                means the domain rules or the benchmark record deserve inspection.
+              </p>
+            </div>
+          </div>
+
+          <div class="quiz-container animate-in" data-quiz="quiz-3">
+            <h3>Scenario quiz: separate bad input from bad math</h3>
+            <div class="quiz-question-block" data-correct="b">
+              <div class="quiz-question">
+                The API is returning `benchmark_not_found` for one city. What is the most likely underlying issue?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>The Tailwind classes are missing</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>The repository could not find a matching benchmark row for that location and segment</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>The language toggle is stuck on French</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Correct. That error is specifically about lookup failure after validation passed." data-error-text="Look at the meaning of the error code. It points to missing data, not styling or language state."></div>
+            </div>
+            <div class="quiz-question-block" data-correct="c">
+              <div class="quiz-question">
+                You want to log how often people submit obviously invalid sizes like `0` or `-4`. Which layer is the best first home?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>The CSV loader</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>The deployment guide</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>The rent-check route where invalid numbers are rejected</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Exactly. That's the choke point where all submitted values pass through." data-error-text="Think about the narrowest gate where every bad submission must pass. That's the route validation logic."></div>
+            </div>
+            <div class="quiz-question-block" data-correct="a">
+              <div class="quiz-question">
+                Which future change would make this API layer slightly thicker?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>Adding authentication or per-user quotas</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>Renaming a button label</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>Changing the hero background gradient</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Yes. Authentication, rate limiting, and policy checks naturally belong around the route boundary." data-error-text="Only one of these changes adds network-facing rules and enforcement responsibilities."></div>
+            </div>
+            <div class="quiz-actions">
+              <button class="quiz-check-btn" type="button" data-action="check-quiz">Check answers</button>
+              <button class="quiz-reset-btn" type="button" data-action="reset-quiz">Try again</button>
+            </div>
+            <div class="quiz-overall-feedback"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="module-4" data-title="Data Lives in CSVs">
+        <div class="module-content screen-grid">
+          <div class="module-head animate-in">
+            <span class="eyebrow">Module 4 · The outside world</span>
+            <span class="module-number">04</span>
+            <h2 class="module-title">The app's “database” is a pair of processed CSV files.</h2>
+            <p class="module-subtitle">
+              Picture a reference library with two carefully organized shelves. One shelf lists places. The other shelf
+              lists benchmark rows. The repository is the librarian that knows how to search both fast enough for an
+              MVP.
+            </p>
+          </div>
+
+          <div class="architecture-grid animate-in">
+            <div class="diagram-shell">
+              <h3>Click a layer to inspect it</h3>
+              <div class="diagram-controls">
+                <button class="layer-btn active" data-layer="frontend">Frontend</button>
+                <button class="layer-btn" data-layer="api">API routes</button>
+                <button class="layer-btn" data-layer="repository">Repository</button>
+                <button class="layer-btn" data-layer="storage">CSV storage</button>
+              </div>
+              <div class="architecture-stack">
+                <div class="arch-layer active" data-layer-panel="frontend">
+                  <h4>Frontend</h4>
+                  <p>Handles typing, selection, and result rendering.</p>
+                </div>
+                <div class="arch-layer" data-layer-panel="api">
+                  <h4>API routes</h4>
+                  <p>Translate browser requests into repository calls and structured JSON responses.</p>
+                </div>
+                <div class="arch-layer" data-layer-panel="repository">
+                  <h4>Repository</h4>
+                  <p>Normalizes search strings, caches benchmark indexes, and hides where the data comes from.</p>
+                </div>
+                <div class="arch-layer" data-layer-panel="storage">
+                  <h4>CSV storage</h4>
+                  <p>`data/processed/locations.csv` and `data/processed/rent_benchmarks.csv` are read from disk at runtime.</p>
+                </div>
+              </div>
+            </div>
+            <div class="arch-readout">
+              <h4 id="layer-title">Frontend</h4>
+              <p id="layer-copy">
+                The browser owns feel and timing. It does not know all benchmark rows directly, so it asks the server
+                whenever it needs fresh suggestions or a verdict.
+              </p>
+              <ul id="layer-points">
+                <li>Great place for form polish and loading states.</li>
+                <li>Bad place for hidden source-of-truth business rules.</li>
+                <li>First stop when the UI feels wrong but the data looks right.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">Code · csv-rent-data-repository.ts</span>
+              <pre><code>  async getBenchmark(locationKey: string, segment: FormSegment): Promise&lt;RentBenchmarkRecord | null&gt; {
+    const index = await getBenchmarkIndex();
+    return index.byLocationAndSegment.get(`${locationKey}:${segment}`) ?? null;
+  }</code></pre>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <p class="tl">Ask for the in-memory index of benchmark rows.</p>
+                <p class="tl">Use a combined key like `location:segment` to grab the exact row in one step.</p>
+                <p class="tl">If nothing matches, return `null` so the route can answer with a clean error.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="two-up">
+            <div class="visual-file-tree animate-in">
+              <h3>Runtime file tree</h3>
+              <ul>
+                <li>
+                  <span class="tree-icon">📄</span>
+                  <span><strong>app/page.tsx</strong><br />Starts the page and injects the summary.</span>
+                </li>
+                <li>
+                  <span class="tree-icon">📄</span>
+                  <span><strong>app/api/locations/route.ts</strong><br />Autocomplete door.</span>
+                </li>
+                <li>
+                  <span class="tree-icon">📄</span>
+                  <span><strong>app/api/rent-check/route.ts</strong><br />Submit-and-judge door.</span>
+                </li>
+                <li>
+                  <span class="tree-icon">📁</span>
+                  <span><strong>data/processed/locations.csv</strong><br />34,900 searchable places.</span>
+                </li>
+                <li>
+                  <span class="tree-icon">📁</span>
+                  <span><strong>data/processed/rent_benchmarks.csv</strong><br />104,700 benchmark rows.</span>
+                </li>
+              </ul>
+            </div>
+            <div class="card animate-in">
+              <h3>Why this design is smart for an MVP</h3>
+              <p>
+                Shipping with local files avoids the cost and complexity of a live database. The repository pattern means
+                the app can later swap CSVs for PostgreSQL without rewriting the whole UI.
+              </p>
+              <div class="tag-row" style="margin-top: 1.5rem">
+                <span class="tag">cheap to deploy</span>
+                <span class="tag">simple to debug</span>
+                <span class="tag">easy to version in git</span>
+                <span class="tag">eventually replaceable</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-container animate-in" data-quiz="quiz-4">
+            <h3>Scenario quiz: reason about storage choices</h3>
+            <div class="quiz-question-block" data-correct="a">
+              <div class="quiz-question">
+                The app deploys on Vercel with no database variables set. Why can it still work?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>Because the current runtime reads processed CSV files directly from the repo</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>Because browsers secretly store the full dataset in cookies</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>Because Next.js bundles PostgreSQL by default</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Exactly. The deployment guide explicitly leans on CSV files checked into the repository." data-error-text="The app works today because its data lives in processed CSV files, not in an external database service."></div>
+            </div>
+            <div class="quiz-question-block" data-correct="b">
+              <div class="quiz-question">
+                A user says search no longer finds accented city names correctly. Which code area is your best first suspect?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>The CSS font stack</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>The repository's normalization logic for search values</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>The SQL table indexes</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Yes. Accent folding and lowercase normalization happen in the repository search helper." data-error-text="Think about where accents are intentionally stripped so 'é' and 'e' can match the same city."></div>
+            </div>
+            <div class="quiz-question-block" data-correct="c">
+              <div class="quiz-question">
+                What is the biggest architectural benefit of hiding CSV access behind a repository interface?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>It makes the gradients warmer</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>It removes the need for tests forever</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>It gives you one seam where storage can change later</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Right. This is the classic value of abstraction: one change seam instead of many scattered storage calls." data-error-text="The point of the repository is not visual polish. It's flexibility and clearer boundaries."></div>
+            </div>
+            <div class="quiz-actions">
+              <button class="quiz-check-btn" type="button" data-action="check-quiz">Check answers</button>
+              <button class="quiz-reset-btn" type="button" data-action="reset-quiz">Try again</button>
+            </div>
+            <div class="quiz-overall-feedback"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="module-5" data-title="The Rent Math">
+        <div class="module-content screen-grid">
+          <div class="module-head animate-in">
+            <span class="eyebrow">Module 5 · The clever trick</span>
+            <span class="module-number">05</span>
+            <h2 class="module-title">The calculator quietly adjusts for apartment size.</h2>
+            <p class="module-subtitle">
+              The metaphor here is tailoring a suit. The benchmark is the standard size on the rack, but the app nudges
+              the price up or down depending on whether the real apartment is much smaller or larger than the reference
+              size.
+            </p>
+          </div>
+
+          <div class="size-lab animate-in">
+            <h3>Play with the size-adjustment rule</h3>
+            <p>
+              This mini lab uses the actual thresholds from the code. Smaller-than-reference apartments get a higher
+              multiplier; bigger ones get a discount multiplier.
+            </p>
+            <div class="diagram-controls">
+              <button class="segment-btn active" data-segment="small" type="button">Studio / 1-2 rooms</button>
+              <button class="segment-btn" data-segment="large" type="button">3+ rooms</button>
+            </div>
+            <div class="lab-grid">
+              <div class="range-wrap">
+                <label for="surface-slider"><strong>Apartment size</strong></label>
+                <input id="surface-slider" type="range" min="15" max="140" value="37" />
+                <div class="meter" aria-hidden="true">
+                  <div class="meter-pin" id="meter-pin" style="left: 37%"></div>
+                </div>
+                <div class="tag-row">
+                  <span class="tag" id="reference-tag">Reference size: 37 m²</span>
+                  <span class="tag" id="surface-tag">Current input: 37 m²</span>
+                </div>
+              </div>
+              <div class="lab-readout">
+                <strong id="multiplier-label">Multiplier: 1.00x</strong>
+                <span id="band-label">Within the reference band, so no size adjustment.</span>
+                <span id="benchmark-label">Adjusted benchmark: 18.00 €/m²</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">Code · src/lib/domain/rent-check.ts</span>
+              <pre><code>export function getSizeAdjustmentMultiplier(surfaceArea: number, referenceSurfaceM2: number): number {
+  if (surfaceArea &lt; 0.7 * referenceSurfaceM2) {
+    return 1.08;
+  }
+
+  if (surfaceArea &lt; 0.9 * referenceSurfaceM2) {
+    return 1.04;
+  }</code></pre>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <p class="tl">Start by comparing the apartment's size to the benchmark's reference size.</p>
+                <p class="tl">If the apartment is much smaller, raise the price-per-square-meter benchmark.</p>
+                <p class="tl">Why? Tiny apartments often cost more per square meter than roomy ones.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="two-up">
+            <div class="card animate-in">
+              <h3>The full verdict formula</h3>
+              <p>
+                The app first computes an adjusted benchmark rent per square meter, then multiplies by the apartment's
+                size, then compares the user's rent to that expected monthly rent. The verdict buckets are based on the
+                percentage gap: below -10%, between -10% and +10%, between +10% and +20%, and above +20%.
+              </p>
+            </div>
+            <div class="aha-box animate-in">
+              <strong>Aha!</strong>
+              <p>
+                This is business logic, not presentation logic. If you ever need tests, this is one of the first files
+                worth protecting with them because it encodes product meaning.
+              </p>
+            </div>
+          </div>
+
+          <div class="quiz-container animate-in" data-quiz="quiz-5">
+            <h3>Scenario quiz: apply the pricing rules</h3>
+            <div class="quiz-question-block" data-correct="b">
+              <div class="quiz-question">
+                You are checking a much smaller apartment than the reference size. Which direction does the multiplier move?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>Down, because all small apartments are cheaper</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>Up, because smaller units often cost more per square meter</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>It never changes</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Exactly. The code bumps the multiplier above 1 for smaller apartments." data-error-text="The app encodes the opposite assumption: very small apartments can command higher per-square-meter prices."></div>
+            </div>
+            <div class="quiz-question-block" data-correct="a">
+              <div class="quiz-question">
+                A rent is 7% above the expected monthly benchmark. Which label should it likely receive?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>Fair</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>Very high</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>Below benchmark</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Yes. The fair band runs up to just under +10% in this code." data-error-text="Check the thresholds carefully: only after the 10% mark does the label move above 'fair'."></div>
+            </div>
+            <div class="quiz-question-block" data-correct="c">
+              <div class="quiz-question">
+                If the verdict categories feel too strict for real users, where is the cleanest place to tweak that behavior?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>The global CSS file</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>The deployment checklist</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>The `getCategoryLabel()` thresholds in the domain file</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Exactly. That function is the source of truth for category boundaries." data-error-text="The labels are decided by domain thresholds, not by styling or docs."></div>
+            </div>
+            <div class="quiz-actions">
+              <button class="quiz-check-btn" type="button" data-action="check-quiz">Check answers</button>
+              <button class="quiz-reset-btn" type="button" data-action="reset-quiz">Try again</button>
+            </div>
+            <div class="quiz-overall-feedback"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="module" id="module-6" data-title="Pipeline and Future">
+        <div class="module-content screen-grid">
+          <div class="module-head animate-in">
+            <span class="eyebrow">Module 6 · When things break + what's next</span>
+            <span class="module-number">06</span>
+            <h2 class="module-title">Raw government files become product data through a cleaning pipeline.</h2>
+            <p class="module-subtitle">
+              Think of this as a customs checkpoint. Messy semicolon-delimited source files arrive from the outside
+              world, the Python script normalizes them, and only then does the web app trust them at runtime.
+            </p>
+          </div>
+
+          <div class="pipeline-shell animate-in">
+            <h3>The data pipeline in one sweep</h3>
+            <div class="pipeline-grid" style="margin-top: 1.5rem">
+              <div class="pipeline-card">
+                <span class="tag">raw</span>
+                <h4 style="margin-top: 1rem">`data/raw/`</h4>
+                <p>Three French CSV files arrive with semicolons, accents, comma decimals, and inconsistent text.</p>
+              </div>
+              <div class="pipeline-card">
+                <span class="tag">clean</span>
+                <h4 style="margin-top: 1rem">Python cleaner</h4>
+                <p>Normalizes encodings, parses numbers, builds confidence levels, and deduplicates records.</p>
+              </div>
+              <div class="pipeline-card">
+                <span class="tag">runtime</span>
+                <h4 style="margin-top: 1rem">Processed CSVs</h4>
+                <p>Writes `locations.csv` and `rent_benchmarks.csv`, which the app reads directly at runtime.</p>
+              </div>
+              <div class="pipeline-card">
+                <span class="tag">later</span>
+                <h4 style="margin-top: 1rem">Optional PostgreSQL</h4>
+                <p>The importer and SQL schema are ready for a future database-backed version.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="translation-block animate-in">
+            <div class="translation-code">
+              <span class="translation-label">Code · clean_rent_benchmarks.py</span>
+              <pre><code>    high_mask = (
+        (frame["prediction_level"] == "commune")
+        &amp; (frame["r2_adj"] &gt;= 0.7)
+        &amp; (frame["nb_observations_commune"] &gt;= 100)
+        &amp; (interval_width_ratio &lt;= 0.30)
+    ).fillna(False)</code></pre>
+            </div>
+            <div class="translation-english">
+              <span class="translation-label">Plain English</span>
+              <div class="translation-lines">
+                <p class="tl">Mark a benchmark as “high confidence” only if several quality checks all pass.</p>
+                <p class="tl">It needs the right prediction level, strong model fit, enough observations, and a narrow interval.</p>
+                <p class="tl">This is product judgment hidden inside data preparation, not in the UI.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="two-up">
+            <div class="card animate-in">
+              <h3>Debugging map</h3>
+              <ul class="debug-list">
+                <li><strong>Search broken?</strong> Look at the client debounce, then the repository's normalization logic.</li>
+                <li><strong>Counts missing?</strong> Look at summary loading, processed files, and the CSV loader paths.</li>
+                <li><strong>Verdict feels weird?</strong> Look at `getSizeAdjustmentMultiplier()` and `getCategoryLabel()`.</li>
+                <li><strong>Deployment works locally but not on Vercel?</strong> Confirm processed CSV files were committed.</li>
+              </ul>
+            </div>
+            <div class="card animate-in">
+              <h3>Big-picture architecture lesson</h3>
+              <p>
+                This project is a great example of a “good-enough now, upgradeable later” architecture. It avoids the
+                weight of a database at the start, but the repository boundary, importer, and SQL schema leave a clear
+                runway for the next stage.
+              </p>
+              <div class="tag-row" style="margin-top: 1.5rem">
+                <span class="tag">MVP-friendly</span>
+                <span class="tag">production-aware</span>
+                <span class="tag">easy to explain to AI</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-container animate-in" data-quiz="quiz-6">
+            <h3>Scenario quiz: pick the best next move</h3>
+            <div class="quiz-question-block" data-correct="c">
+              <div class="quiz-question">
+                The deployed app builds fine but crashes when loading real data. Which missing asset is the deployment guide most worried about?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>The README file</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>The favicon</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>The processed CSV files under `data/processed/`</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Exactly. The app reads those files at runtime, so missing them is a real production failure." data-error-text="The runtime dependency called out in the docs is the pair of processed CSV files, not cosmetic assets."></div>
+            </div>
+            <div class="quiz-question-block" data-correct="a">
+              <div class="quiz-question">
+                You decide to migrate to PostgreSQL. Which existing design choice makes that easier?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>The repository abstraction that already hides storage details</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>The use of gradients in the UI</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>The fact that the app uses French labels</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Right. The repository seam is what keeps storage changes from rippling everywhere." data-error-text="Only one option actually changes how painful the migration will be: the storage abstraction."></div>
+            </div>
+            <div class="quiz-question-block" data-correct="b">
+              <div class="quiz-question">
+                If confidence labels look wrong after a new raw dataset import, which layer deserves suspicion first?
+              </div>
+              <div class="quiz-options">
+                <button class="quiz-option" data-value="a"><span class="quiz-option-radio"></span><span>The navigation dots</span></button>
+                <button class="quiz-option" data-value="b"><span class="quiz-option-radio"></span><span>The cleaning script that derives `confidence_base`</span></button>
+                <button class="quiz-option" data-value="c"><span class="quiz-option-radio"></span><span>The form's placeholder text</span></button>
+              </div>
+              <div class="quiz-feedback" data-correct-text="Yes. Confidence is derived during cleaning, so bad labels after import point upstream to the pipeline." data-error-text="Those labels are computed before the app runs, during data preparation, so the pipeline is the right suspect."></div>
+            </div>
+            <div class="quiz-actions">
+              <button class="quiz-check-btn" type="button" data-action="check-quiz">Check answers</button>
+              <button class="quiz-reset-btn" type="button" data-action="reset-quiz">Try again</button>
+            </div>
+            <div class="quiz-overall-feedback"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      (() => {
+        const progressBar = document.querySelector(".progress-bar");
+        const sections = Array.from(document.querySelectorAll(".module"));
+        const navDots = Array.from(document.querySelectorAll(".nav-dot"));
+
+        document.querySelectorAll(".stagger-children").forEach((parent) => {
+          Array.from(parent.children).forEach((child, index) => {
+            child.style.setProperty("--stagger-index", index);
+          });
+        });
+
+        const revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                revealObserver.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -10% 0px", threshold: 0.1 },
+        );
+
+        document.querySelectorAll(".animate-in").forEach((element) => revealObserver.observe(element));
+
+        let ticking = false;
+        function updateProgress() {
+          const scrollTop = window.scrollY;
+          const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = scrollHeight <= 0 ? 0 : (scrollTop / scrollHeight) * 100;
+          progressBar.style.width = `${progress}%`;
+          ticking = false;
+        }
+
+        window.addEventListener(
+          "scroll",
+          () => {
+            if (!ticking) {
+              window.requestAnimationFrame(updateProgress);
+              ticking = true;
+            }
+          },
+          { passive: true },
+        );
+        updateProgress();
+
+        const sectionObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              const id = entry.target.id;
+              navDots.forEach((dot) => {
+                const active = dot.dataset.target === id;
+                dot.classList.toggle("active", active);
+                dot.setAttribute("aria-selected", active ? "true" : "false");
+              });
+            });
+          },
+          { threshold: 0.45 },
+        );
+
+        sections.forEach((section) => sectionObserver.observe(section));
+
+        navDots.forEach((dot) => {
+          dot.addEventListener("click", () => {
+            const target = document.getElementById(dot.dataset.target);
+            if (target) {
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          });
+        });
+
+        window.addEventListener("keydown", (event) => {
+          if (!["ArrowDown", "ArrowUp"].includes(event.key)) return;
+          const currentIndex = sections.findIndex((section) => {
+            const rect = section.getBoundingClientRect();
+            return rect.top <= window.innerHeight * 0.35 && rect.bottom >= window.innerHeight * 0.35;
+          });
+          if (currentIndex === -1) return;
+          const nextIndex = event.key === "ArrowDown" ? Math.min(currentIndex + 1, sections.length - 1) : Math.max(currentIndex - 1, 0);
+          if (nextIndex !== currentIndex) {
+            event.preventDefault();
+            sections[nextIndex].scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+
+        const journeyData = {
+          j1: {
+            title: "Home page opens",
+            copy: "The server renders the page and asks the repository for summary counts before the browser even sees the interface. That is why the top-of-page number cards can feel instant.",
+            bullets: [
+              ["Why you care", "This tells you the app mixes server rendering with browser-side interaction."],
+              ["Debug smell", "If the big counts vanish, suspect the repository or CSV loader first."],
+            ],
+          },
+          j2: {
+            title: "User types a city",
+            copy: "The frontend waits 180 milliseconds, cancels stale searches with an AbortController, and only then asks `/api/locations` for suggestions.",
+            bullets: [
+              ["Why you care", "This is a classic debounce pattern that saves network work and keeps the UI calm."],
+              ["Debug smell", "If typing feels laggy or noisy, inspect query state, debounce timing, and the search route."],
+            ],
+          },
+          j3: {
+            title: "User submits the form",
+            copy: "The client first validates obvious problems like missing city or non-positive numbers. Then it sends a JSON payload to `/api/rent-check`.",
+            bullets: [
+              ["Why you care", "You can ask AI to 'extend the payload' once you know which layer owns it."],
+              ["Debug smell", "A 400 means bad input shape. A strange result means the math or the data row is questionable."],
+            ],
+          },
+          j4: {
+            title: "Repository finds the record",
+            copy: "The repository loads processed CSV data, normalizes search text, and caches a benchmark map keyed by location plus segment.",
+            bullets: [
+              ["Why you care", "This is the seam that will matter when the app eventually moves to PostgreSQL."],
+              ["Debug smell", "If one city works and another fails, suspect missing rows or mismatched keys."],
+            ],
+          },
+          j5: {
+            title: "The calculator judges the price",
+            copy: "The domain layer adjusts the benchmark for apartment size, calculates an expected monthly rent, measures the percentage gap, and maps that gap to a category label.",
+            bullets: [
+              ["Why you care", "This is the real product brain. If the app's verdict philosophy changes, this is where it changes."],
+              ["Debug smell", "If outputs look consistently too harsh or too lenient, inspect the thresholds here."],
+            ],
+          },
+        };
+
+        const journeyTitle = document.getElementById("journey-title");
+        const journeyCopy = document.getElementById("journey-copy");
+        const journeyBullets = document.getElementById("journey-bullets");
+        document.querySelectorAll(".journey-step").forEach((button) => {
+          button.addEventListener("click", () => {
+            document.querySelectorAll(".journey-step").forEach((step) => {
+              step.classList.toggle("active", step === button);
+              step.setAttribute("aria-selected", step === button ? "true" : "false");
+            });
+            const data = journeyData[button.dataset.journey];
+            if (!data) return;
+            journeyTitle.textContent = data.title;
+            journeyCopy.textContent = data.copy;
+            journeyBullets.innerHTML = data.bullets
+              .map(([title, body]) => `<div><strong>${title}</strong>${body}</div>`)
+              .join("");
+          });
+        });
+
+        const actorData = {
+          client: {
+            title: "RentCheckClient",
+            tag: "Browser orchestrator",
+            copy: "This is the air traffic controller. It decides when suggestions appear, when errors clear, when the form can be submitted, and when the result scrolls into view.",
+            points: [
+              "Keeps UI state like query text, selected location, numbers, loading states, and current language.",
+              "Contains the most obvious place to add new form fields or interaction polish.",
+              "Should not quietly become the only owner of pricing rules.",
+            ],
+          },
+          locations: {
+            title: "/api/locations",
+            tag: "Suggestion route",
+            copy: "This route is a tiny search doorway. It turns the browser query into a repository call and sends back JSON suggestions.",
+            points: [
+              "Useful when debugging autocomplete failures separately from rent-check failures.",
+              "A good insertion point for analytics like 'most searched cities'.",
+              "Stays intentionally thin so behavior remains easy to reason about.",
+            ],
+          },
+          rentcheck: {
+            title: "/api/rent-check",
+            tag: "Validation + verdict route",
+            copy: "This route receives the form payload, rejects invalid values, fetches the relevant data row, and hands the trusted pieces to the domain calculator.",
+            points: [
+              "This is the narrowest gate for server-side validation.",
+              "If you later add auth or rate limits, this boundary becomes more important.",
+              "Error codes like `benchmark_not_found` are clues about which downstream lookup failed.",
+            ],
+          },
+          repository: {
+            title: "CSV repository",
+            tag: "Storage adapter",
+            copy: "The repository hides where data comes from. Today that is processed CSV files. Tomorrow it could be a database without forcing the UI to learn a new storage shape.",
+            points: [
+              "Normalizes search strings so accents and case do not break city matching.",
+              "Builds an in-memory benchmark map for fast repeated lookups.",
+              "Is the best seam for a future storage migration.",
+            ],
+          },
+          domain: {
+            title: "Domain calculator",
+            tag: "Business meaning",
+            copy: "This layer is where the app decides what 'fair' means. It is the closest thing the product has to an opinionated brain.",
+            points: [
+              "Encodes size adjustments and category thresholds.",
+              "Turns raw numbers into human-facing signals like 'fair' or 'very high'.",
+              "One of the highest-value places to add tests as the app matures.",
+            ],
+          },
+        };
+
+        const actorTitle = document.getElementById("actor-title");
+        const actorTag = document.getElementById("actor-tag");
+        const actorCopy = document.getElementById("actor-copy");
+        const actorPoints = document.getElementById("actor-points");
+        document.querySelectorAll(".actor-btn").forEach((button) => {
+          button.addEventListener("click", () => {
+            document.querySelectorAll(".actor-btn").forEach((btn) => btn.classList.toggle("active", btn === button));
+            const data = actorData[button.dataset.actor];
+            if (!data) return;
+            actorTitle.textContent = data.title;
+            actorTag.textContent = data.tag;
+            actorCopy.textContent = data.copy;
+            actorPoints.innerHTML = data.points.map((point) => `<li>${point}</li>`).join("");
+          });
+        });
+
+        const layerData = {
+          frontend: {
+            title: "Frontend",
+            copy: "The browser owns feel and timing. It does not know all benchmark rows directly, so it asks the server whenever it needs fresh suggestions or a verdict.",
+            points: [
+              "Great place for form polish and loading states.",
+              "Bad place for hidden source-of-truth business rules.",
+              "First stop when the UI feels wrong but the data looks right.",
+            ],
+          },
+          api: {
+            title: "API routes",
+            copy: "The API layer is a translator. It checks requests, calls the right helpers, and returns predictable JSON.",
+            points: [
+              "Natural home for auth, quotas, and logging later.",
+              "Useful boundary when you want clear error codes.",
+              "Should stay small enough that you can read it end-to-end quickly.",
+            ],
+          },
+          repository: {
+            title: "Repository",
+            copy: "This is the storage adapter. It hides whether data comes from CSV files, a database, or something else.",
+            points: [
+              "Search normalization and result ranking live here.",
+              "Caching benchmark indexes here improves repeated lookups.",
+              "A migration-friendly seam is one of the repo's smartest design decisions.",
+            ],
+          },
+          storage: {
+            title: "CSV storage",
+            copy: "The raw truth at runtime is two processed files sitting on disk. That makes the deployed app simple, cheap, and easy to reproduce.",
+            points: [
+              "Deployment depends on committing the processed files.",
+              "Great for an MVP with mostly read-only public data.",
+              "Eventually weaker than a database once writes, analytics, or user data appear.",
+            ],
+          },
+        };
+
+        const layerTitle = document.getElementById("layer-title");
+        const layerCopy = document.getElementById("layer-copy");
+        const layerPoints = document.getElementById("layer-points");
+        document.querySelectorAll(".layer-btn").forEach((button) => {
+          button.addEventListener("click", () => {
+            document.querySelectorAll(".layer-btn").forEach((btn) => btn.classList.toggle("active", btn === button));
+            document.querySelectorAll(".arch-layer").forEach((panel) => panel.classList.toggle("active", panel.dataset.layerPanel === button.dataset.layer));
+            const data = layerData[button.dataset.layer];
+            if (!data) return;
+            layerTitle.textContent = data.title;
+            layerCopy.textContent = data.copy;
+            layerPoints.innerHTML = data.points.map((point) => `<li>${point}</li>`).join("");
+          });
+        });
+
+        let tooltipEl = null;
+        function ensureTooltip() {
+          if (!tooltipEl) {
+            tooltipEl = document.createElement("div");
+            tooltipEl.className = "tooltip-popup";
+            document.body.appendChild(tooltipEl);
+          }
+          return tooltipEl;
+        }
+
+        function showTooltip(target) {
+          const tooltip = ensureTooltip();
+          tooltip.textContent = target.dataset.tooltip;
+          tooltip.classList.add("visible");
+          const rect = target.getBoundingClientRect();
+          const tooltipRect = tooltip.getBoundingClientRect();
+          let left = rect.left + rect.width / 2 - tooltipRect.width / 2;
+          left = Math.max(12, Math.min(left, window.innerWidth - tooltipRect.width - 12));
+          let top = rect.top - tooltipRect.height - 12;
+          if (top < 12) {
+            top = rect.bottom + 12;
+          }
+          tooltip.style.left = `${left}px`;
+          tooltip.style.top = `${top}px`;
+        }
+
+        function hideTooltip() {
+          if (tooltipEl) {
+            tooltipEl.classList.remove("visible");
+          }
+        }
+
+        document.querySelectorAll(".term").forEach((term) => {
+          term.setAttribute("tabindex", "0");
+          term.addEventListener("mouseenter", () => showTooltip(term));
+          term.addEventListener("mouseleave", hideTooltip);
+          term.addEventListener("focus", () => showTooltip(term));
+          term.addEventListener("blur", hideTooltip);
+          term.addEventListener("click", (event) => {
+            event.preventDefault();
+            if (tooltipEl && tooltipEl.classList.contains("visible") && tooltipEl.textContent === term.dataset.tooltip) {
+              hideTooltip();
+            } else {
+              showTooltip(term);
+            }
+          });
+        });
+        document.addEventListener("scroll", hideTooltip, { passive: true });
+
+        const slider = document.getElementById("surface-slider");
+        const surfaceTag = document.getElementById("surface-tag");
+        const referenceTag = document.getElementById("reference-tag");
+        const multiplierLabel = document.getElementById("multiplier-label");
+        const bandLabel = document.getElementById("band-label");
+        const benchmarkLabel = document.getElementById("benchmark-label");
+        const meterPin = document.getElementById("meter-pin");
+        let currentSegment = "small";
+
+        function getSurfaceConfig() {
+          return currentSegment === "small"
+            ? { reference: 37, base: 18, max: 90 }
+            : { reference: 72, base: 14, max: 140 };
+        }
+
+        function getMultiplier(surface, reference) {
+          if (surface < 0.7 * reference) return 1.08;
+          if (surface < 0.9 * reference) return 1.04;
+          if (surface <= 1.1 * reference) return 1;
+          if (surface <= 1.4 * reference) return 0.95;
+          return 0.9;
+        }
+
+        function updateLab() {
+          const config = getSurfaceConfig();
+          const surface = Number(slider.value);
+          const multiplier = getMultiplier(surface, config.reference);
+          const adjusted = (config.base * multiplier).toFixed(2);
+          const ratio = surface / config.reference;
+          let copy = "Within the reference band, so no size adjustment.";
+          if (ratio < 0.7) copy = "Much smaller than the reference, so the benchmark gets an +8% bump.";
+          else if (ratio < 0.9) copy = "A bit smaller than the reference, so the benchmark gets a +4% bump.";
+          else if (ratio <= 1.1) copy = "Within the reference band, so no size adjustment.";
+          else if (ratio <= 1.4) copy = "Larger than the reference, so the benchmark gets a -5% discount.";
+          else copy = "Much larger than the reference, so the benchmark gets a -10% discount.";
+
+          referenceTag.textContent = `Reference size: ${config.reference} m²`;
+          surfaceTag.textContent = `Current input: ${surface} m²`;
+          multiplierLabel.textContent = `Multiplier: ${multiplier.toFixed(2)}x`;
+          bandLabel.textContent = copy;
+          benchmarkLabel.textContent = `Adjusted benchmark: ${adjusted} €/m²`;
+          meterPin.style.left = `${(surface / config.max) * 100}%`;
+          slider.max = String(config.max);
+        }
+
+        slider.addEventListener("input", updateLab);
+        document.querySelectorAll(".segment-btn").forEach((button) => {
+          button.addEventListener("click", () => {
+            document.querySelectorAll(".segment-btn").forEach((btn) => btn.classList.toggle("active", btn === button));
+            currentSegment = button.dataset.segment;
+            const config = getSurfaceConfig();
+            slider.max = String(config.max);
+            slider.value = String(config.reference);
+            updateLab();
+          });
+        });
+        updateLab();
+
+        function checkQuiz(container) {
+          const questions = Array.from(container.querySelectorAll(".quiz-question-block"));
+          let correct = 0;
+          let answered = 0;
+          questions.forEach((question) => {
+            const selected = question.querySelector(".quiz-option.selected");
+            const feedback = question.querySelector(".quiz-feedback");
+            const correctValue = question.dataset.correct;
+            question.querySelectorAll(".quiz-option").forEach((option) => {
+              option.classList.remove("correct", "incorrect");
+              option.disabled = true;
+            });
+            if (!selected) {
+              feedback.textContent = "Pick an answer first.";
+              feedback.className = "quiz-feedback show error";
+              return;
+            }
+            answered += 1;
+            if (selected.dataset.value === correctValue) {
+              correct += 1;
+              selected.classList.add("correct");
+              feedback.innerHTML = `<strong>Exactly.</strong> ${feedback.dataset.correctText}`;
+              feedback.className = "quiz-feedback show success";
+            } else {
+              selected.classList.add("incorrect");
+              const target = question.querySelector(`.quiz-option[data-value="${correctValue}"]`);
+              if (target) target.classList.add("correct");
+              feedback.innerHTML = `<strong>Not quite.</strong> ${feedback.dataset.errorText}`;
+              feedback.className = "quiz-feedback show error";
+            }
+          });
+
+          const overall = container.querySelector(".quiz-overall-feedback");
+          if (!overall) return;
+          if (answered === 0) {
+            overall.classList.remove("show");
+            return;
+          }
+          overall.classList.add("show");
+          overall.textContent =
+            correct === questions.length
+              ? "You traced the architecture well. More importantly, you now know where to aim your next debugging question."
+              : `You got ${correct} of ${questions.length} fully right. The useful part is not the score; it is noticing which layer you misattributed.`;
+        }
+
+        function resetQuiz(container) {
+          container.querySelectorAll(".quiz-option").forEach((option) => {
+            option.classList.remove("selected", "correct", "incorrect");
+            option.disabled = false;
+          });
+          container.querySelectorAll(".quiz-feedback").forEach((feedback) => {
+            feedback.className = "quiz-feedback";
+            feedback.textContent = "";
+          });
+          const overall = container.querySelector(".quiz-overall-feedback");
+          if (overall) {
+            overall.classList.remove("show");
+            overall.textContent = "";
+          }
+        }
+
+        document.querySelectorAll(".quiz-container").forEach((container) => {
+          container.querySelectorAll(".quiz-option").forEach((option) => {
+            option.addEventListener("click", () => {
+              const question = option.closest(".quiz-question-block");
+              if (!question) return;
+              question.querySelectorAll(".quiz-option").forEach((sibling) => sibling.classList.remove("selected"));
+              option.classList.add("selected");
+            });
+          });
+
+          container.querySelector('[data-action="check-quiz"]').addEventListener("click", () => checkQuiz(container));
+          container.querySelector('[data-action="reset-quiz"]').addEventListener("click", () => resetQuiz(container));
+        });
+      })();
+    </script>
+  </body>
+</html>
